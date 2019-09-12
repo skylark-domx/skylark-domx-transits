@@ -1,5 +1,5 @@
 /**
- * skylark-domx-brofxwser - The skylark fx library for dom api extension.
+ * skylark-domx-fx - The skylark fx library for dom api extension.
  * @author Hudaokeji Co.,Ltd
  * @version v0.9.0
  * @link www.skylarkjs.org
@@ -86,7 +86,7 @@
 
 })(function(define,require) {
 
-define('skylark-domx-brofxwser/fx',[
+define('skylark-domx-fx/fx',[
     "skylark-langx/skylark",
     "skylark-langx/langx",
     "skylark-domx-browser",
@@ -631,13 +631,13 @@ define('skylark-domx-brofxwser/fx',[
 
     return skylark.attach("domx.fx", fx);
 });
-define('skylark-domx-brofxwser/main',[
+define('skylark-domx-fx/main',[
 	"./fx"
 ],function(browser){
 	return fx;
 });
-define('skylark-domx-brofxwser', ['skylark-domx-brofxwser/main'], function (main) { return main; });
+define('skylark-domx-fx', ['skylark-domx-fx/main'], function (main) { return main; });
 
 
 },this);
-//# sourceMappingURL=sourcemaps/skylark-domx-brofxwser.js.map
+//# sourceMappingURL=sourcemaps/skylark-domx-fx.js.map
