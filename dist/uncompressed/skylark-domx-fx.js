@@ -633,7 +633,7 @@ define('skylark-domx-fx/fx',[
 });
 define('skylark-domx-fx/main',[
 	"./fx"
-],function(browser){
+],function(fx){
 	return fx;
 });
 define('skylark-domx-fx', ['skylark-domx-fx/main'], function (main) { return main; });

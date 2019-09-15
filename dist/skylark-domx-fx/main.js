@@ -5,5 +5,5 @@
  * @link www.skylarkjs.org
  * @license MIT
  */
-define(["./fx"],function(f){return fx});
+define(["./fx"],function(n){return n});
 //# sourceMappingURL=sourcemaps/main.js.map

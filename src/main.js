@@ -1,5 +1,5 @@
 define([
 	"./fx"
-],function(browser){
+],function(fx){
 	return fx;
 });
