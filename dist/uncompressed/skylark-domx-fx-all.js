@@ -9923,7 +9923,7 @@ define('skylark-domx-fx/main',[
         "toggle"
     ], fx);
 
-    $fn.hide =  $.wraps.wrapper_every_act(fx.hide, fx);
+    $.fn.hide =  $.wraps.wrapper_every_act(fx.hide, fx);
 
     $.fn.animate = $.wraps.wrapper_every_act(fx.animate, fx);
     $.fn.emulateTransitionEnd = $.wraps.wrapper_every_act(fx.emulateTransitionEnd, fx);
