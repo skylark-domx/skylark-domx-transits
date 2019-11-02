@@ -2,10 +2,11 @@ define([
     "skylark-langx/skylark",
     "skylark-langx/langx",
     "skylark-domx-browser",
+    "skylark-domx-noder",
     "skylark-domx-geom",
     "skylark-domx-styler",
     "skylark-domx-eventer"
-], function(skylark, langx, browser, geom, styler, eventer) {
+], function(skylark, langx, browser, noder, geom, styler, eventer) {
     var animationName,
         animationDuration,
         animationTiming,
@@ -518,7 +519,7 @@ define([
      * @param {Node} params
      */
     function overlay(elm, params) {
-        var overlayDiv = createElement("div", params);
+        var overlayDiv = noder.createElement("div", params);
         styler.css(overlayDiv, {
             position: "absolute",
             top: 0,
@@ -547,23 +548,23 @@ define([
             callback = params.callback,
             timer,
 
-            throbber = this.createElement("div", {
+            throbber = noder.createElement("div", {
                 "class": params.className || "throbber"
             }),
             _overlay = overlay(throbber, {
                 "class": 'overlay fade'
             }),
-            throb = this.createElement("div", {
+            throb = noder.createElement("div", {
                 "class": "throb"
             }),
-            textNode = this.createTextNode(text || ""),
+            textNode = noder.createTextNode(text || ""),
             remove = function() {
                 if (timer) {
                     clearTimeout(timer);
                     timer = null;
                 }
                 if (throbber) {
-                    self.remove(throbber);
+                    noder.remove(throbber);
                     throbber = null;
                 }
             },
