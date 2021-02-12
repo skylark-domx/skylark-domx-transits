@@ -1,7 +1,21 @@
 define([
 	"./fx",
 	"skylark-domx-velm",
-	"skylark-domx-query"	
+	"skylark-domx-query",
+    "./animate",
+    "./bounce",
+    "./emulateTransitionEnd",
+    "./fadeIn",
+    "./fadeOut",
+    "./fadeTo",
+    "./fadeToggle",
+    "./hide",
+    "./show",
+    "./slideDown",
+    "./slideToggle",
+    "./slideUp",
+    "./throb",
+    "./toggle"
 ],function(fx,velm,$){
     // from ./fx
     velm.delegate([
