@@ -51,18 +51,9 @@
         </p>
         
         
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.min.js"></script>
-    <script>
-        require.config({
-            baseUrl: "./",
-            packages: [{
-                name: "skylark-utils-dom",location: "../../dist/skylark-utils-dom"
-            }, {
-                name: "skylark-langx",location: "http://registry.skylarkjs.org/packages/skylark-langx/v0.9.5-beta/uncompressed/skylark-langx"
-            }]
-        });
-        require(["skylark-utils-dom/query", "skylark-utils-dom/finder", "skylark-utils-dom/fx"], function($, finder, fx) {
-            
+    <script type="text/javascript" src="../require.js" data-main="../bootstrap.js"></script>
+    <script> 
+        function initPage($,fx) {            
                 // Hide the p element to slideDown it
                 $('#slideDown-button').next('p').hide();
                 
@@ -80,7 +71,7 @@
                 $('#slideToggle-button').click(function(){
                     $('#slideToggle-button').next('p').slideToggle();
                 });
-        });
+        }
         </script>
     </body>
 </html>

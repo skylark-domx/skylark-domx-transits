@@ -12,11 +12,11 @@ define([
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeTo(elm, speed, opacity, easing, callback) {
+    function fade(elm, speed, opacity, easing, callback) {
         animate(elm, { opacity: opacity }, speed, easing, callback);
         return this;
     }
 
 
-    return fx.fadeTo = fadeTo;
+    return fx.fade = fade;
 });

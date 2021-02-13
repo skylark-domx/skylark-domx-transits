@@ -2,7 +2,7 @@ define([
     "skylark-langx/langx",
     "skylark-domx-styler",
     "./fx",
-    "./fadeTo"
+    "./fade"
 ],function(langx,styler,fx,fadeTo) {
     /*   
      * Display an element by fading them to opaque.
