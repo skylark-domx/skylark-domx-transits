@@ -5,6 +5,7 @@ define([
     "./animate",
     "./bounce",
     "./emulateTransitionEnd",
+    "./explode",
     "./fadeIn",
     "./fadeOut",
     "./fade",
