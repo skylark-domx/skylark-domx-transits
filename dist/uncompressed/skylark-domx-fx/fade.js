@@ -12,8 +12,8 @@ define([
      * @param {String} easing
      * @param {Function} callback
      */
-    function fade(elm, speed, opacity, easing, callback) {
-        animate(elm, { opacity: opacity }, speed, easing, callback);
+    function fade(elm, opacity,options, callback) {
+        animate(elm, { opacity: opacity }, options.duration, options.easing, callback);
         return this;
     }
 

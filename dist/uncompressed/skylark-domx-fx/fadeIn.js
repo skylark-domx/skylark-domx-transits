@@ -7,11 +7,11 @@ define([
     /*   
      * Display an element by fading them to opaque.
      * @param {Object} elm  
-     * @param {Number or String} speed
+     * @param {Number or String} duration
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeIn(elm, speed, easing, callback) {
+    function fadeIn(elm, duration, easing, callback) {
         var target = styler.css(elm, "opacity");
         if (target > 0) {
             styler.css(elm, "opacity", 0);
@@ -20,7 +20,7 @@ define([
         }
         styler.show(elm);
 
-        fadeTo(elm, speed, target, easing, callback);
+        fadeTo(elm,  target,{ duration, easing}, callback);
 
         return this;
     }

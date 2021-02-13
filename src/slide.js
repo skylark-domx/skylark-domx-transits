@@ -7,7 +7,7 @@ define([
     "./hide"
 ],function(langx,styler,fx,animate,show,hide) {
 
-    function slide(elm,options, callback ) {
+    function slide(elm,options,callback ) {
     	if (langx.isFunction(options)) {
     		callback = options;
     		options = {};

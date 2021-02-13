@@ -438,8 +438,8 @@ define('skylark-domx-fx/fade',[
      * @param {String} easing
      * @param {Function} callback
      */
-    function fade(elm, speed, opacity, easing, callback) {
-        animate(elm, { opacity: opacity }, speed, easing, callback);
+    function fade(elm, opacity,options, callback) {
+        animate(elm, { opacity: opacity }, options.duration, options.easing, callback);
         return this;
     }
 
@@ -455,11 +455,11 @@ define('skylark-domx-fx/fadeIn',[
     /*   
      * Display an element by fading them to opaque.
      * @param {Object} elm  
-     * @param {Number or String} speed
+     * @param {Number or String} duration
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeIn(elm, speed, easing, callback) {
+    function fadeIn(elm, duration, easing, callback) {
         var target = styler.css(elm, "opacity");
         if (target > 0) {
             styler.css(elm, "opacity", 0);
@@ -468,7 +468,7 @@ define('skylark-domx-fx/fadeIn',[
         }
         styler.show(elm);
 
-        fadeTo(elm, speed, target, easing, callback);
+        fadeTo(elm,  target,{ duration, easing}, callback);
 
         return this;
     }
@@ -485,38 +485,21 @@ define('skylark-domx-fx/fadeOut',[
     /*   
      * Hide an element by fading them to transparent.
      * @param {Object} elm  
-     * @param {Number or String} speed
+     * @param {Number or String} duration
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeOut(elm, speed, easing, callback) {
-        var _elm = elm,
-            complete,
-            opacity = styler.css(elm,"opacity"),
-            options = {};
+    function fadeOut(elm, duration, easing, callback) {
 
-        if (langx.isPlainObject(speed)) {
-            options.easing = speed.easing;
-            options.duration = speed.duration;
-            complete = speed.complete;
-        } else {
-            options.duration = speed;
-            if (callback) {
-                complete = callback;
-                options.easing = easing;
-            } else {
-                complete = easing;
-            }
-        }
-        options.complete = function() {
+        function complete() {
             styler.css(elm,"opacity",opacity);
             styler.hide(elm);
-            if (complete) {
-                complete.call(elm);
+            if (callback) {
+                callback.call(elm);
             }
         }
 
-        fadeTo(elm, options, 0);
+        fadeTo(elm, 0,{duration,easing},callback);
 
         return this;
     }
@@ -618,7 +601,7 @@ define('skylark-domx-fx/slide',[
     "./hide"
 ],function(langx,styler,fx,animate,show,hide) {
 
-    function slide(elm,options, callback ) {
+    function slide(elm,options,callback ) {
     	if (langx.isFunction(options)) {
     		callback = options;
     		options = {};
