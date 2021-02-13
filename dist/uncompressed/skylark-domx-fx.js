@@ -596,6 +596,12 @@ define('skylark-domx-fx/fade',[
      * @param {Function} callback
      */
     function fade(elm, opacity,options, callback) {
+        if (langx.isFunction(options)) {
+            callback = options;
+            options = {};
+        }
+        options = options || {};
+        
         animate(elm, { opacity: opacity }, options.duration, options.easing, callback);
         return this;
     }
@@ -616,7 +622,7 @@ define('skylark-domx-fx/fadeIn',[
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeIn(elm, duration, easing, callback) {
+    function fadeIn(elm, options, callback) {
         var target = styler.css(elm, "opacity");
         if (target > 0) {
             styler.css(elm, "opacity", 0);
@@ -625,7 +631,7 @@ define('skylark-domx-fx/fadeIn',[
         }
         styler.show(elm);
 
-        fadeTo(elm,  target,{ duration, easing}, callback);
+        fadeTo(elm,  target,options, callback);
 
         return this;
     }
@@ -646,7 +652,7 @@ define('skylark-domx-fx/fadeOut',[
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeOut(elm, duration, easing, callback) {
+    function fadeOut(elm, options, callback) {
 
         function complete() {
             styler.css(elm,"opacity",opacity);
@@ -656,7 +662,7 @@ define('skylark-domx-fx/fadeOut',[
             }
         }
 
-        fadeTo(elm, 0,{duration,easing},callback);
+        fadeTo(elm, 0,options,callback);
 
         return this;
     }
@@ -825,16 +831,15 @@ define('skylark-domx-fx/slide',[
     "skylark-langx/langx",
     "skylark-domx-styler",
     "./fx",
-    "./animate",
-    "./show",
-    "./hide"
-],function(langx,styler,fx,animate,show,hide) {
+    "./animate"
+],function(langx,styler,fx,animate) {
 
     function slide(elm,options,callback ) {
     	if (langx.isFunction(options)) {
     		callback = options;
     		options = {};
     	}
+    	options = options || {};
 		var direction = options.direction || "down",
 			isHide = ( direction === "up" || direction === "left" ),
 			isVert = ( direction === "up" || direction === "down" ),
@@ -851,7 +856,7 @@ define('skylark-domx-fx/slide',[
         	}
         } else {
 	        // show element if it is hidden
-	        show(elm);        	
+	        styler.show(elm);        	
 	        // place it so it displays as usually but hidden
 	        styler.css(elm, {
 	            position: 'absolute',
@@ -893,7 +898,7 @@ define('skylark-domx-fx/slide',[
 	                duration: duration,
 	                queue: false,
 	                complete: function() {
-	                    hide(elm);
+	                    styler.hide(elm);
 	                    styler.css(elm, {
 	                        visibility: 'visible',
 	                        overflow: 'hidden',
@@ -971,7 +976,7 @@ define('skylark-domx-fx/slide',[
 	                duration: duration,
 	                queue: false,
 	                complete: function() {
-	                    hide(elm);
+	                    styler.hide(elm);
 	                    styler.css(elm, {
 	                        visibility: 'visible',
 	                        overflow: 'hidden',

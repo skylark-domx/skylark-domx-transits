@@ -2,16 +2,15 @@ define([
     "skylark-langx/langx",
     "skylark-domx-styler",
     "./fx",
-    "./animate",
-    "./show",
-    "./hide"
-],function(langx,styler,fx,animate,show,hide) {
+    "./animate"
+],function(langx,styler,fx,animate) {
 
     function slide(elm,options,callback ) {
     	if (langx.isFunction(options)) {
     		callback = options;
     		options = {};
     	}
+    	options = options || {};
 		var direction = options.direction || "down",
 			isHide = ( direction === "up" || direction === "left" ),
 			isVert = ( direction === "up" || direction === "down" ),
@@ -28,7 +27,7 @@ define([
         	}
         } else {
 	        // show element if it is hidden
-	        show(elm);        	
+	        styler.show(elm);        	
 	        // place it so it displays as usually but hidden
 	        styler.css(elm, {
 	            position: 'absolute',
@@ -70,7 +69,7 @@ define([
 	                duration: duration,
 	                queue: false,
 	                complete: function() {
-	                    hide(elm);
+	                    styler.hide(elm);
 	                    styler.css(elm, {
 	                        visibility: 'visible',
 	                        overflow: 'hidden',
@@ -148,7 +147,7 @@ define([
 	                duration: duration,
 	                queue: false,
 	                complete: function() {
-	                    hide(elm);
+	                    styler.hide(elm);
 	                    styler.css(elm, {
 	                        visibility: 'visible',
 	                        overflow: 'hidden',

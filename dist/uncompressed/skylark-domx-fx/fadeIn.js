@@ -11,7 +11,7 @@ define([
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeIn(elm, duration, easing, callback) {
+    function fadeIn(elm, options, callback) {
         var target = styler.css(elm, "opacity");
         if (target > 0) {
             styler.css(elm, "opacity", 0);
@@ -20,7 +20,7 @@ define([
         }
         styler.show(elm);
 
-        fadeTo(elm,  target,{ duration, easing}, callback);
+        fadeTo(elm,  target,options, callback);
 
         return this;
     }

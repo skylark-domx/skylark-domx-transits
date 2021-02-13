@@ -19,7 +19,9 @@ Compare to this one that won't fade.
     <script>
     function initPage($,fx) {
        $("p:first").on("click", function() {
-            fx.fadeTo($("p")[0],"slow",0.33);
+            fx.fade($("p")[0],0.33,{
+                duration : "slow"
+            });
         });
     };
     </script>

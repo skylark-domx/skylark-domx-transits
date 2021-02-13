@@ -13,6 +13,12 @@ define([
      * @param {Function} callback
      */
     function fade(elm, opacity,options, callback) {
+        if (langx.isFunction(options)) {
+            callback = options;
+            options = {};
+        }
+        options = options || {};
+        
         animate(elm, { opacity: opacity }, options.duration, options.easing, callback);
         return this;
     }
