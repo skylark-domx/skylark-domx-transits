@@ -87,6 +87,8 @@ define([
 			$( pieces ).remove();
 			done();
 		}
+
+		return this;
 	}
 
 

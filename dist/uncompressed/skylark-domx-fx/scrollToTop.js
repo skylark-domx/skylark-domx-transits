@@ -28,10 +28,9 @@ define([
                 if (callback) langx.debounce(callback, 1000)();
             }
         }, runEvery);
+
+        return this;
     }
-
-
-
 
     return fx.scrollToTop = scrollToTop;
 });

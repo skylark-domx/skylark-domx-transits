@@ -100,6 +100,7 @@ define([
             return prev.then(curr);
         }, Deferred.resolve());
 
+        return this;
     } 
 
     return fx.bounce = bounce;

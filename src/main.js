@@ -11,6 +11,8 @@ define([
     "./fade",
     "./fadeToggle",
     "./hide",
+    "./pulsate",
+    "./shake",
     "./show",
     "./slide",
     "./slideDown",

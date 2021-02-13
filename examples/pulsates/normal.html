@@ -52,14 +52,14 @@
 
 <div class="toggler">
 	<div id="effect">
-		<h3 >Explode</h3>
+		<h3 >Pulsate</h3>
 		<p>
 			Etiam libero neque, luctus a, eleifend nec, semper at, lorem. Sed pede. Nulla lorem metus, adipiscing ut, luctus sed, hendrerit vitae, mi.
 		</p>
 	</div>
 </div>
 
-<button id="button">Run Explode</button>
+<button id="button">Run Pulsate</button>
 
 <div class="demo-description">
 <p>Click the button above to preview the effect.</p>
@@ -68,7 +68,7 @@
 	<script type="text/javascript" >
 		function initPage($,fx) {
 			$( "#button" ).on( "click", function() {
-				fx.explode($( "#effect")[0],{
+				fx.pulsate($( "#effect")[0],{
 					//mode : "show",
 					duration : 400
 				});

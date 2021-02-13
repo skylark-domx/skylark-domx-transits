@@ -395,6 +395,7 @@ define('skylark-domx-fx/bounce',[
             return prev.then(curr);
         }, Deferred.resolve());
 
+        return this;
     } 
 
     return fx.bounce = bounce;
@@ -424,6 +425,162 @@ define('skylark-domx-fx/emulateTransitionEnd',[
 
     return fx.emulateTransitionEnd = emulateTransitionEnd;
 });
+define('skylark-domx-fx/show',[
+    "skylark-langx/langx",
+    "skylark-domx-styler",
+    "./fx",
+    "./animate"
+],function(langx,styler,fx,animate) {
+    /*   
+     * Display an element.
+     * @param {Object} elm  
+     * @param {String} speed
+     * @param {Function} callback
+     */
+    function show(elm, speed, callback) {
+        styler.show(elm);
+        if (speed) {
+            if (!callback && langx.isFunction(speed)) {
+                callback = speed;
+                speed = "normal";
+            }
+            styler.css(elm, "opacity", 0)
+            animate(elm, { opacity: 1, scale: "1,1" }, speed, callback);
+        }
+        return this;
+    }
+
+    return fx.show = show;
+});
+define('skylark-domx-fx/hide',[
+    "skylark-langx/langx",
+    "skylark-domx-styler",
+    "./fx",
+    "./animate"
+],function(langx,styler,fx,animate) {
+    /*   
+     * Hide an element.
+     * @param {Object} elm  
+     * @param {String} speed
+     * @param {Function} callback
+     */
+    function hide(elm, speed, callback) {
+        if (speed) {
+            if (!callback && langx.isFunction(speed)) {
+                callback = speed;
+                speed = "normal";
+            }
+            animate(elm, { opacity: 0, scale: "0,0" }, speed, function() {
+                styler.hide(elm);
+                if (callback) {
+                    callback.call(elm);
+                }
+            });
+        } else {
+            styler.hide(elm);
+        }
+        return this;
+    }
+
+    return fx.hide = hide;
+});
+define('skylark-domx-fx/explode',[
+    "skylark-langx/langx",
+    "skylark-domx-styler",
+    "skylark-domx-geom",
+    "skylark-domx-noder",
+    "skylark-domx-query",
+    "./fx",
+    "./animate",
+    "./show",
+    "./hide"
+],function(langx,styler,geom,noder,$,fx,animate,show,hide) {
+
+    function explode( elm,options, done ) {
+
+		// Show and then visibility:hidden the element before calculating offset
+		styler.show(elm);
+		styler.css(elm, "visibility", "hidden" );
+
+		var i, j, left, top, mx, my,
+			rows = options.pieces ? Math.round( Math.sqrt( options.pieces ) ) : 3,
+			cells = rows,
+			mode = options.mode,
+			show = mode === "show",
+			offset = geom.pagePosition(elm),
+
+			// Width and height of a piece
+			size = geom.marginSize(elm),
+			width = Math.ceil( size.width / cells ),
+			height = Math.ceil( size.height / rows ),
+			pieces = [];
+
+		// Children animate complete:
+		function childComplete() {
+			pieces.push( this );
+			if ( pieces.length === rows * cells ) {
+				animComplete();
+			}
+		}
+
+		// Clone the element for each row and cell.
+		for ( var i = 0; i < rows; i++ ) { // ===>
+			top = offset.top + i * height;
+			my = i - ( rows - 1 ) / 2;
+
+			for ( j = 0; j < cells; j++ ) { // |||
+				left = offset.left + j * width;
+				mx = j - ( cells - 1 ) / 2;
+
+				// Create a clone of the now hidden main element that will be absolute positioned
+				// within a wrapper div off the -left and -top equal to size of our pieces
+				$(elm)
+					.clone()
+					.appendTo( "body" )
+					.wrap( "<div></div>" )
+					.css( {
+						position: "absolute",
+						visibility: "visible",
+						left: -j * width,
+						top: -i * height
+					} )
+
+					// Select the wrapper - make it overflow: hidden and absolute positioned based on
+					// where the original was located +left and +top equal to the size of pieces
+					.parent()
+						.addClass( options.explodeClass || "ui-effects-explode" )
+						.css( {
+							position: "absolute",
+							overflow: "hidden",
+							width: width,
+							height: height,
+							left: left + ( show ? mx * width : 0 ),
+							top: top + ( show ? my * height : 0 ),
+							opacity: show ? 0 : 1
+						} )
+						.animate( {
+							left: left + ( show ? 0 : mx * width ),
+							top: top + ( show ? 0 : my * height ),
+							opacity: show ? 1 : 0
+						}, options.duration || 500, options.easing, childComplete );
+			}
+		}
+
+		function animComplete() {
+			styler.css(elm, {
+				visibility: "visible"
+			} );
+			$( pieces ).remove();
+			done();
+		}
+
+		return this;
+	}
+
+
+	return fx.explode = explode;
+});
+
 define('skylark-domx-fx/fade',[
     "skylark-langx/langx",
     "skylark-domx-styler",
@@ -533,65 +690,137 @@ define('skylark-domx-fx/fadeToggle',[
 
     return fx.fadeToggle = fadeToggle;
 });
-define('skylark-domx-fx/hide',[
+define('skylark-domx-fx/pulsate',[
     "skylark-langx/langx",
+    "skylark-domx-geom",
     "skylark-domx-styler",
     "./fx",
     "./animate"
-],function(langx,styler,fx,animate) {
-    /*   
-     * Hide an element.
-     * @param {Object} elm  
-     * @param {String} speed
-     * @param {Function} callback
-     */
-    function hide(elm, speed, callback) {
-        if (speed) {
-            if (!callback && langx.isFunction(speed)) {
-                callback = speed;
-                speed = "normal";
-            }
-            animate(elm, { opacity: 0, scale: "0,0" }, speed, function() {
-                styler.hide(elm);
-                if (callback) {
-                    callback.call(elm);
-                }
-            });
-        } else {
-            styler.hide(elm);
-        }
-        return this;
-    }
+],function(langx,geom,styler,fx,animate) {
 
-    return fx.hide = hide;
+	function pulsate(elm, options, done ) {
+		var 
+			mode = options.mode,
+			show = mode === "show" || !mode,
+			hide = mode === "hide",
+			showhide = show || hide,
+
+			// Showing or hiding leaves off the "last" animation
+			anims = ( ( options.times || 5 ) * 2 ) + ( showhide ? 1 : 0 ),
+			duration = options.duration / anims,
+			animateTo = 0,
+			i = 1;
+
+		if ( show || styler.isInvisible(elm) ) {
+			styler.css(elm, "opacity", 0 );
+			styler.show(elm);
+			animateTo = 1;
+		}
+
+		// Anims - 1 opacity "toggles"
+
+		var Deferred = langx.Deferred;
+		var funcs = [];
+
+		function doAnimate(elm,properties, duration, ease) {
+			return function() {
+				var d = new Deferred();
+
+				animate( elm,properties, duration, ease ,function(){
+					d.resolve();
+				});
+				return d.promise;
+
+			}
+		}
+
+
+		for ( ; i < anims; i++ ) {
+			funcs.push(doAnimate(elm,{ opacity: animateTo }, duration, options.easing ));
+			animateTo = 1 - animateTo;
+		}
+
+	    funcs.push(doAnimate(elm,{ opacity: animateTo }, duration, options.easing ));
+
+		funcs.push(done);
+		funcs.reduce(function(prev, curr, index, array) {
+	  		return prev.then(curr);
+		}, Deferred.resolve());
+
+		return this;
+
+	}
+
+	return fx.pulsate = pulsate;
+
 });
-define('skylark-domx-fx/show',[
+
+define('skylark-domx-fx/shake',[
     "skylark-langx/langx",
+    "skylark-domx-geom",
     "skylark-domx-styler",
     "./fx",
     "./animate"
-],function(langx,styler,fx,animate) {
-    /*   
-     * Display an element.
-     * @param {Object} elm  
-     * @param {String} speed
-     * @param {Function} callback
-     */
-    function show(elm, speed, callback) {
-        styler.show(elm);
-        if (speed) {
-            if (!callback && langx.isFunction(speed)) {
-                callback = speed;
-                speed = "normal";
-            }
-            styler.css(elm, "opacity", 0)
-            animate(elm, { opacity: 1, scale: "1,1" }, speed, callback);
-        }
-        return this;
-    }
+],function(langx,geom,styler,fx,animate) {
+	function shake(elm, options, done ) {
 
-    return fx.show = show;
+		var i = 1,
+			direction = options.direction || "left",
+			distance = options.distance || 20,
+			times = options.times || 3,
+			anims = times * 2 + 1,
+			speed = Math.round( options.duration / anims ),
+			ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
+			positiveMotion = ( direction === "up" || direction === "left" ),
+			animation0 = {},
+			animation = {},
+			animation1 = {},
+			animation2 = {};
+
+		var Deferred = langx.Deferred;
+			start = geom.relativePosition(elm)[ref],
+			funcs = [];
+
+		function doAnimate(elm,properties, duration, ease) {
+			return function() {
+				var d = new Deferred();
+
+				animate(elm, properties, duration, ease ,function(){
+					d.resolve();
+				});
+				return d.promise;
+			}
+		}
+
+		// Animation
+		animation0[ ref ] = start;
+		animation[ ref ] = start + ( positiveMotion ? -1 : 1 ) * distance;
+		animation1[ ref ] = animation[ ref ] + ( positiveMotion ? 1 : -1 ) * distance * 2;
+		animation2[ ref ] = animation1[ ref ] + ( positiveMotion ? -1 : 1 ) * distance * 2;
+
+		// Animate
+	    funcs.push(doAnimate(elm,animation, speed, options.easing ));
+
+		// Shakes
+		for ( ; i < times; i++ ) {
+		    funcs.push(doAnimate(elm,animation1, speed, options.easing ));
+		    funcs.push(doAnimate(elm,animation2, speed, options.easing ));
+		}
+
+	    funcs.push(doAnimate(elm,animation0, speed /2 , options.easing ));
+
+		funcs.push(done);
+		funcs.reduce(function(prev, curr, index, array) {
+	  		return prev.then(curr);
+		}, Deferred.resolve());
+
+		return this;
+	}
+
+	return fx.shake = shake;
+
 });
+
 define('skylark-domx-fx/slide',[
     "skylark-langx/langx",
     "skylark-domx-styler",
@@ -966,11 +1195,14 @@ define('skylark-domx-fx/main',[
     "./animate",
     "./bounce",
     "./emulateTransitionEnd",
+    "./explode",
     "./fadeIn",
     "./fadeOut",
     "./fade",
     "./fadeToggle",
     "./hide",
+    "./pulsate",
+    "./shake",
     "./show",
     "./slide",
     "./slideDown",
