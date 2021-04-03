@@ -1115,6 +1115,7 @@ define('skylark-domx-fx/throb',[
      */
     function throb(elm, params) {
         params = params || {};
+
         var self = this,
             text = params.text,
             style = params.style,
@@ -1128,10 +1129,6 @@ define('skylark-domx-fx/throb',[
             //_overlay = overlay(throbber, {
             //    "class": 'overlay fade'
             //}),
-            throb = noder.createElement("div", {
-                "class": params.throb && params.throb.className || "throb"
-            }),
-            textNode = noder.createTextNode(text || ""),
             remove = function() {
                 if (timer) {
                     clearTimeout(timer);
@@ -1147,12 +1144,25 @@ define('skylark-domx-fx/throb',[
                     textNode.nodeValue = params.text;
                 }
             };
+
         if (params.style) {
             styler.css(throbber,params.style);
         }
-        throb.appendChild(textNode);
-        throbber.appendChild(throb);
+
+        //throb = noder.createElement("div", {
+        //   "class": params.throb && params.throb.className || "throb"
+        //}),
+        //textNode = noder.createTextNode(text || ""),
+ 
+        var content = params.content ||  '<span class="throb"></span>';
+
+        //throb.appendChild(textNode);
+        //throbber.appendChild(throb);
+
+        noder.html(throbber,content);
+        
         elm.appendChild(throbber);
+
         var end = function() {
             remove();
             if (callback) callback();
@@ -1162,6 +1172,7 @@ define('skylark-domx-fx/throb',[
         }
 
         return {
+            throbber : throbber,
             remove: remove,
             update: update
         };
