@@ -1,8 +1,9 @@
 define([
     "skylark-langx/langx",
+    "skylark-domx-browser",
     "skylark-domx-eventer",
     "./fx"
-],function(langx,eventer,fx) {
+],function(langx,browser,eventer,fx) {
     
     function emulateTransitionEnd(elm,duration) {
         var called = false;
