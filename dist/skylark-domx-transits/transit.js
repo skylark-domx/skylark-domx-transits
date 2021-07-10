@@ -1,0 +1,9 @@
+/**
+ * skylark-domx-transits - The skylark transits library for dom api extension.
+ * @author Hudaokeji Co.,Ltd
+ * @version v0.9.0
+ * @link www.skylarkjs.org
+ * @license MIT
+ */
+define(["skylark-langx/langx","skylark-domx-browser","skylark-domx-noder","skylark-domx-geom","skylark-domx-styler","skylark-domx-eventer","./transits","./scrollToTop"],function(e,r,s,t,i,n,o,a){var l,c,p,f,d=r.normalizeCssEvent("TransitionEnd"),u=/^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i,m=r.css3PropPrefix+"transform",x={};return x[l=r.normalizeCssProperty("transition-property")]=x[c=r.normalizeCssProperty("transition-duration")]=x[f=r.normalizeCssProperty("transition-delay")]=x[p=r.normalizeCssProperty("transition-timing-function")]="",o.transit=function(r,s,y,g,k,h){var v,P,z,b={},T=[],w="",C=this,j=!1,E=!1;for(v in e.isPlainObject(y)&&(g=y.easing,k=y.complete,h=y.delay,y=y.duration),e.isString(y)&&(y=o.speeds[y]),void 0===y&&(y=o.speeds.normal),y/=1e3,o.off&&(y=0),e.isFunction(g)?(k=g,eace="swing"):g=g||"swing",h?h/=1e3:h=0,s){var O=s[v];if(u.test(v))w+=v+"("+O+") ";else{if("scrollTop"===v&&(E=!0),"clip"==v&&e.isPlainObject(O)){if(b[v]="rect("+O.top+"px,"+O.right+"px,"+O.bottom+"px,"+O.left+"px)","auto"==i.css(r,"clip")){var X=t.size(r);i.css(r,"clip","rect(0px,"+X.width+"px,"+X.height+"px,0px)")}}else b[v]=O;T.push(e.dasherize(v))}}return P=d,w&&(b[m]=w,T.push(m)),y>0&&(b[l]=T.join(", "),b[c]=y+"s",b[f]=h+"s",b[p]=g),z=function(e){if(j=!0,e){if(e.target!==e.currentTarget)return;n.off(e.target,P,z)}else n.off(r,P,z);i.css(r,x),k&&k.call(this)},y>0&&(n.on(r,P,z),e.debounce(function(){j||z.call(C)},1e3*(y+h)+25)()),r.clientLeft,i.css(r,b),y<=0&&e.debounce(function(){j||z.call(C)},0)(),E&&a(r,s.scrollTop,y,k),this}});
+//# sourceMappingURL=sourcemaps/transit.js.map

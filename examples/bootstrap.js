@@ -202,7 +202,7 @@ requirejs.config({
          },
 
           {
-            name: 'skylark-domx-fx',
+            name: 'skylark-domx-transits',
             location : "../src",
             main: 'main'
           }      
@@ -212,9 +212,9 @@ requirejs.config({
  
 // require(["module/name", ...], function(params){ ... });
 require(["skylark-domx-query"], function ($) {
-    require(["skylark-domx-fx"], function (fx) {
+    require(["skylark-domx-transits"], function (transits) {
         if (window.initPage) {
-            window.initPage($,fx);
+            window.initPage($,transits);
         }
     });
 });
