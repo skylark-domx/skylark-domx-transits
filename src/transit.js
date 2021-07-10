@@ -5,9 +5,8 @@ define([
     "skylark-domx-geom",
     "skylark-domx-styler",
     "skylark-domx-eventer",
-    "./transits",
-    "./scrollToTop"
-], function(langx, browser, noder, geom, styler, eventer,transits,scrollToTop) {
+    "./transits"
+], function(langx, browser, noder, geom, styler, eventer,transits) {
 
     var transitionProperty,
         transitionDuration,
@@ -158,7 +157,7 @@ define([
         }
 
         if (hasScrollTop) {
-            scrollToTop(elm, properties["scrollTop"], duration, callback);
+            geom.scrollToTop(elm, properties["scrollTop"], duration, callback);
         }
 
         return this;

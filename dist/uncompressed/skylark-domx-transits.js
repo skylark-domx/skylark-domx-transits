@@ -106,41 +106,6 @@ define('skylark-domx-transits/transits',[
 
     return skylark.attach("domx.transits", transits);
 });
-define('skylark-domx-transits/scrollToTop',[
-    "skylark-langx/langx",
-    "skylark-domx-styler",
-    "./transits"
-],function(langx,styler,transits) {
-    /*   
-     * Set the vertical position of the scroll bar for an element.
-     * @param {Object} elm  
-     * @param {Number or String} pos
-     * @param {Number or String} speed
-     * @param {Function} callback
-     */
-    function scrollToTop(elm, pos, speed, callback) {
-        var scrollFrom = parseInt(elm.scrollTop),
-            i = 0,
-            runEvery = 5, // run every 5ms
-            freq = speed * 1000 / runEvery,
-            scrollTo = parseInt(pos);
-
-        var interval = setInterval(function() {
-            i++;
-
-            if (i <= freq) elm.scrollTop = (scrollTo - scrollFrom) / freq * i + scrollFrom;
-
-            if (i >= freq + 1) {
-                clearInterval(interval);
-                if (callback) langx.debounce(callback, 1000)();
-            }
-        }, runEvery);
-
-        return this;
-    }
-
-    return transits.scrollToTop = scrollToTop;
-});
 define('skylark-domx-transits/transit',[
     "skylark-langx/langx",
     "skylark-domx-browser",
@@ -148,9 +113,8 @@ define('skylark-domx-transits/transit',[
     "skylark-domx-geom",
     "skylark-domx-styler",
     "skylark-domx-eventer",
-    "./transits",
-    "./scrollToTop"
-], function(langx, browser, noder, geom, styler, eventer,transits,scrollToTop) {
+    "./transits"
+], function(langx, browser, noder, geom, styler, eventer,transits) {
 
     var transitionProperty,
         transitionDuration,
@@ -301,7 +265,7 @@ define('skylark-domx-transits/transit',[
         }
 
         if (hasScrollTop) {
-            scrollToTop(elm, properties["scrollTop"], duration, callback);
+            geom.scrollToTop(elm, properties["scrollTop"], duration, callback);
         }
 
         return this;
