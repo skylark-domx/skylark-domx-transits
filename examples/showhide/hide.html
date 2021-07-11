@@ -24,7 +24,7 @@
     <a href="#">Click to hide me too</a>
     <p>Here is another paragraph</p>
     <script>
-    require(["skylark-utils-dom/query", "skylark-utils-dom/finder", "skylark-utils-dom/fx"], function($, finder, fx) {
+    require(["skylark-domx-dom/query", "skylark-utils-dom/finder", "skylark-utils-dom/fx"], function($, finder, fx) {
         fx.hide(finder.find("p"));
         $("a").on("click", function(event) {
             event.preventDefault();
