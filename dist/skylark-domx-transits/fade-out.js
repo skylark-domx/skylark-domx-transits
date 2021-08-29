@@ -6,4 +6,4 @@
  * @license MIT
  */
 define(["skylark-langx/langx","skylark-domx-styler","./transits","./fade"],function(n,t,r,a){return r.fadeOut=function(n,t,r){return a(n,0,t,r),this}});
-//# sourceMappingURL=sourcemaps/fadeOut.js.map
+//# sourceMappingURL=sourcemaps/fade-out.js.map

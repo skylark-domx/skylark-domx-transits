@@ -2,8 +2,8 @@ define([
     "skylark-langx/langx",
     "skylark-domx-geom",
     "./transits",
-    "./slideDown",
-    "./slideUp"
+    "./slide-down",
+    "./slide-up"
 ],function(langx,geom,transits,slideDown,slideUp) {
 
     /*   

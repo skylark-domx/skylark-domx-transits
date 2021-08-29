@@ -6,4 +6,4 @@
  * @license MIT
  */
 define(["./transits","./slide"],function(n,i){return n.slideDown=function(n,t,e){return i(n,{direction:"down",duration:t},e)}});
-//# sourceMappingURL=sourcemaps/slideDown.js.map
+//# sourceMappingURL=sourcemaps/slide-down.js.map

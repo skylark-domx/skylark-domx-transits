@@ -2,8 +2,8 @@ define([
     "skylark-langx/langx",
     "skylark-domx-styler",
     "./transits",
-    "./fadeIn",
-    "./fadeOut"
+    "./fade-in",
+    "./fade-out"
 ],function(langx,styler,transits,fadeIn,fadeOut) {
 
     /*   
