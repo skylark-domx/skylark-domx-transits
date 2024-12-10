@@ -5,5 +5,5 @@
  * @link www.skylarkjs.org
  * @license MIT
  */
-define(["skylark-langx/langx","skylark-domx-styler","skylark-domx-noder","./transits","./transit"],function(t,e,n,l,r){return l.throb=function(t,l){(l=l||{}).text,l.style;var r,a=l.time,s=l.callback,o=n.createElement("div",{class:l.className||"throbber"}),c=function(){r&&(clearTimeout(r),r=null),o&&(n.remove(o),o=null)};l.style&&e.css(o,l.style);var i=l.content||'<span class="throb"></span>';return n.html(o,i),t.appendChild(o),a&&(r=setTimeout(function(){c(),s&&s()},a)),{throbber:o,remove:c,update:function(t){t&&t.text&&o&&(textNode.nodeValue=t.text)}}}});
+define(["skylark-langx/langx","skylark-domx-styler","skylark-domx-noder","./transits","./transit"],function(t,o,c,e,n){return e.throb=function(t,e){e=e||{};var n,l=e.time,r=e.callback,a=c.createElement("div",{class:e.className||"throbber"}),s=function(){n&&(clearTimeout(n),n=null),a&&(c.remove(a),a=null)},e=(e.style&&o.css(a,e.style),e.content||'<span class="throb"></span>');return c.html(a,e),t.appendChild(a),l&&(n=setTimeout(function(){s(),r&&r()},l)),{throbber:a,remove:s,update:function(t){t&&t.text&&a&&(textNode.nodeValue=t.text)}}}});
 //# sourceMappingURL=sourcemaps/throb.js.map

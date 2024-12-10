@@ -5,5 +5,5 @@
  * @link www.skylarkjs.org
  * @license MIT
  */
-define(["skylark-langx/langx","skylark-domx-styler","./transits","./fade"],function(n,s,a,t){return a.fadeIn=function(n,a,r){var e=s.css(n,"opacity");return e>0?s.css(n,"opacity",0):e=1,s.show(n),t(n,e,a,r),this}});
+define(["skylark-langx/langx","skylark-domx-styler","./transits","./fade"],function(n,e,s,i){return s.fadeIn=function(n,s,a,t){var r=e.css(n,"opacity");return 0<r?e.css(n,"opacity",0):r=1,e.show(n),i(n,r,s,a,t),this}});
 //# sourceMappingURL=sourcemaps/fade-in.js.map

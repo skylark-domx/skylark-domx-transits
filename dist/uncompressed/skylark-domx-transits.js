@@ -5,10 +5,8 @@
  * @link www.skylarkjs.org
  * @license MIT
  */
-(function(factory,globals) {
-  var define = globals.define,
-      require = globals.require,
-      isAmd = (typeof define === 'function' && define.amd),
+(function(factory,globals,define,require) {
+  var isAmd = (typeof define === 'function' && define.amd),
       isCmd = (!isAmd && typeof exports !== 'undefined');
 
   if (!isAmd && !define) {
@@ -572,19 +570,19 @@ define('skylark-domx-transits/fade',[
     /*   
      * Adjust the opacity of an element.
      * @param {Object} elm  
-     * @param {Number or String} speed
      * @param {Number or String} opacity
+     * @param {Number or String} duration
      * @param {String} easing
      * @param {Function} callback
      */
-    function fade(elm, opacity,options, callback) {
-        if (langx.isFunction(options)) {
-            callback = options;
-            options = {};
-        }
-        options = options || {};
+    function fade(elm, opacity,duration,easing, callback) {
+        ///if (langx.isFunction(options)) {
+        ///    callback = options;
+        ///    options = {};
+        ///}
+        ///options = options || {};
         
-        transit(elm, { opacity: opacity }, options.duration, options.easing, callback);
+        transit(elm, { opacity: opacity }, duration, easing, callback);
         return this;
     }
 
@@ -604,7 +602,7 @@ define('skylark-domx-transits/fade-in',[
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeIn(elm, options, callback) {
+    function fadeIn(elm, duration,easing, callback) {
         var target = styler.css(elm, "opacity");
         if (target > 0) {
             styler.css(elm, "opacity", 0);
@@ -613,7 +611,7 @@ define('skylark-domx-transits/fade-in',[
         }
         styler.show(elm);
 
-        fadeTo(elm,  target,options, callback);
+        fadeTo(elm, target,duration, easing,callback);
 
         return this;
     }
@@ -634,7 +632,7 @@ define('skylark-domx-transits/fade-out',[
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeOut(elm, options, callback) {
+    function fadeOut(elm, duration,easing, callback) {
 
         function complete() {
             styler.css(elm,"opacity",opacity);
@@ -644,7 +642,7 @@ define('skylark-domx-transits/fade-out',[
             }
         }
 
-        fadeTo(elm, 0,options,callback);
+        fadeTo(elm, 0,duration,easing,callback);
 
         return this;
     }
@@ -1248,5 +1246,5 @@ define('skylark-domx-transits/main',[
 define('skylark-domx-transits', ['skylark-domx-transits/main'], function (main) { return main; });
 
 
-},this);
+},this,define,require);
 //# sourceMappingURL=sourcemaps/skylark-domx-transits.js.map

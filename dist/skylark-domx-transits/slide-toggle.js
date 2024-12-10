@@ -5,5 +5,5 @@
  * @link www.skylarkjs.org
  * @license MIT
  */
-define(["skylark-langx/langx","skylark-domx-geom","./transits","./slide-down","./slide-up"],function(n,e,i,l,s){return i.slideToggle=function(n,i,t){return 0==e.height(n)?l(n,i,t):s(n,i,t),this}});
+define(["skylark-langx/langx","skylark-domx-geom","./transits","./slide-down","./slide-up"],function(n,l,e,s,t){return e.slideToggle=function(n,e,i){return(0==l.height(n)?s:t)(n,e,i),this}});
 //# sourceMappingURL=sourcemaps/slide-toggle.js.map

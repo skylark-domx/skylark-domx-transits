@@ -5,5 +5,5 @@
  * @link www.skylarkjs.org
  * @license MIT
  */
-define(["./transits","./slide"],function(n,i){return n.slideUp=function(n,t,e){return i(n,{direction:"up",duration:t},e)}});
+define(["./transits","./slide"],function(n,e){return n.slideUp=function(n,i,t){return e(n,{direction:"up",duration:i},t)}});
 //# sourceMappingURL=sourcemaps/slide-up.js.map

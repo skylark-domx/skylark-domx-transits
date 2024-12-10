@@ -5,5 +5,5 @@
  * @link www.skylarkjs.org
  * @license MIT
  */
-define(["./transits","./slide"],function(n,i){return n.slideDown=function(n,t,e){return i(n,{direction:"down",duration:t},e)}});
+define(["./transits","./slide"],function(n,e){return n.slideDown=function(n,i,t){return e(n,{direction:"down",duration:i},t)}});
 //# sourceMappingURL=sourcemaps/slide-down.js.map

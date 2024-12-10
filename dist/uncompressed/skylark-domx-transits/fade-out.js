@@ -11,7 +11,7 @@ define([
      * @param {String} easing
      * @param {Function} callback
      */
-    function fadeOut(elm, options, callback) {
+    function fadeOut(elm, duration,easing, callback) {
 
         function complete() {
             styler.css(elm,"opacity",opacity);
@@ -21,7 +21,7 @@ define([
             }
         }
 
-        fadeTo(elm, 0,options,callback);
+        fadeTo(elm, 0,duration,easing,callback);
 
         return this;
     }
